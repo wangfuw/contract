@@ -61,7 +61,7 @@ contract Test {
 
     /// @notice 自定义错误
     /// @dev 所有以知错误
-
+    /// @param 当前错误信息
     /// 这是自定义错误: 上方空一行
     error MyError(string msg);
 
@@ -78,6 +78,11 @@ contract Test {
      * Functions
      *
     */
+
+    /// @notice leader"大家好"
+    /// @dev  只能在step 为0 只能leader 说
+    /// @param content 内容
+    /// @return  true
     function hello(string calldata content) external onlyLeader returns(bool){
         if(step!=0){
             revert(UNKNOWN);
@@ -89,6 +94,76 @@ contract Test {
         }
         step = 1;
         emit Step(step);
+        return true;
+    }
+
+    /// @notice other"领导好"
+    /// @dev  只能在step 为1 说 “领导好”
+    /// @param content 内容
+    /// @return  true
+    function helloRes(string calldata content) external notLeader returns(bool){
+        if(step!=1){
+            revert(UNKNOWN);
+        }
+        if(
+            !review(content,unicode"领导好")
+        ){
+            revert MyError(unicode"必须说:大家好");
+        }
+        step = 2;
+        emit Step(step);
+        return true;
+    }
+
+    /// @notice leader"同志们幸苦了"
+    /// @dev  只能在step 为2 leader说 “同志们幸苦了”
+    /// @param content 内容
+    /// @return  true
+    function comfort(string calldata content) external payable onlyLeader returns(bool){
+        if(step!=2){
+            revert(UNKNOWN);
+        }
+        if(
+            !review(content,unicode"同志们幸苦了")
+        ){
+            revert MyError(unicode"必须说:同志们幸苦了");
+        }
+        if(msg.value < 2 ether){
+            revert MyError(unicode"给钱！！！ 最少两个ETH");
+        }
+        step = 3;
+        emit Step(step);
+        emit Log("comfort", msg.sender, msg.value, msg.data);
+        return true;
+    }
+
+    /// @notice other"为人民服务"
+    /// @dev  只能在step 为3 说 “为人民服务”
+    /// @param content 内容
+    /// @return  true
+    function comfortRs(string calldata content) external notLeader returns(bool){
+        if(step!=3){
+            revert(UNKNOWN);
+        }
+        if(
+            !review(content,unicode"为人民服务")
+        ){
+            revert MyError(unicode"必须说:为人民服务");
+        }
+        step = 4;
+        emit Step(step);
+        return true;
+    }
+
+    /// @notice 用于leader 对合约销毁
+    /// @dev  只能在step 为4  leader 调用
+    /// @return  true
+    function destruct() external onlyLeader returns(bool){
+        if(step!=4){
+            revert(UNKNOWN);
+        }
+        emit Log("destruct", msg.sender, address(this).balance, msg.data);
+        selfdestruct(payable(msg.sender));
         return true;
     }
 
