@@ -94,9 +94,29 @@ remix 编译 部署 运行
 - 合约的构造函数使用 -函数的基本用法
 - 函数中条件判断和错误输出事件和事件触发
 - NatSpec 用法演示
-- 自定错误使用和触发，以及结合、NatSpec`抛出错误 fallbar和‘receive`的使用和不同之处`immutable`不可变量的使用`constant’常量的使用 unicode 字面常量 -modifier 使用
+- 自定错误使用和触发，以及结合、NatSpec`抛出错误 fallback和‘receive`的使用和不同之处`immutable`不可变量的使用`constant’常量的使用 unicode 字面常量 -modifier 使用
 - ‘keccak256’结合‘abi.encodePacked`判断字符串是否相同
 
 
 WETH代币, 是包装ETH主币，作为ERC20的合约
+ - 10ETH -> 10 WETH
+ - 10 WETH -> 10 ETH
+ - WETH 遵守ERC20 标准
+ERC20 标准:
+- 3个查询
+    - balanceOf : 查询指定地址的Token 数量
+    - allowance : 查询指定地址对另外有一个地址的剩余授权额度
+    - totalSupply: 查询当前合约的Token总量
+- 2个交易
+    - transfer : 从当前调用者地址发送指定数量的Token 到指定地址
+    - transferFrom : 当向另外一个地址合约存款时, 对方合约必须调用transferFrom 才可以把Token 拿到它的合约中 【代理转账】
+- 2个事件
+    - Transfer: 转账事件
+    - Approval: 授权事件
+- 1 个授权
+    - approve : 授权指定地址可以操作调用者的最大Token 数量
+
+solidity: 数据 3-19
+    
+
 
