@@ -117,6 +117,52 @@ ERC20 标准:
     - approve : 授权指定地址可以操作调用者的最大Token 数量
 
 solidity: 数据 3-19
+    uint/int
+    bytesN/bytes
+    enum
     
+    自定义类型：
+     
+值类型: 地址类型code
+    - address.code 属性
+        - 一个地址是合约地址,那么code是有值的 length > 0
+        - 如果一个外部地址(用户地址),则code 没有值。长度为0
+    - 糖果
+
+地址类型： 外部地址 合约地址
+
+两种地址形式
+    address
+    address payable
+        -send
+        -transfer
+形式转换:
+    -from address
+    -to address payable
+地址属性:
+    balance  address.balance  returns(uint256)
+    code     address.code     returns(bytes memory) 
+    codehash  address.codehash returns(bytes32)
+地址方法:
+    address()
+    payable() 地址转支付地址
+    .transfer(uint256 amount) 合约地址转账
+        - gas 2300
+        - 如果错误 reverts 发出错误
+    .send(uint256 amount) : 将余额转到当前地址,并返回交易成功状态 合约地址转账
+    .call(bytes memory): 给定的有效载荷 payload 发出低级call 调用 返回交易状态 和返回数据(调用合约的方法并转账)
+    .delegatecall(bytes memory)  同上  不能转钱
+    staticcall(bytes memory) 同上  不能转钱
+总结：
+三种call
+transfer / send /call 三种转账的总结
+注意:
+
+
+
+
+
+        
+
 
 
