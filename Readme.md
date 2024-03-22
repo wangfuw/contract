@@ -151,15 +151,27 @@ solidity: 数据 3-19
         - 如果错误 reverts 发出错误
     .send(uint256 amount) : 将余额转到当前地址,并返回交易成功状态 合约地址转账
     .call(bytes memory): 给定的有效载荷 payload 发出低级call 调用 返回交易状态 和返回数据(调用合约的方法并转账)
-    .delegatecall(bytes memory)  同上  不能转钱
+    .delegatecall(bytes memory) dai  同上  不能转钱
     staticcall(bytes memory) 同上  不能转钱
 总结：
 三种call
 transfer / send /call 三种转账的总结
+转钱：
+_toAds.transfer(100)  "payable"
+_toAds.send(100)          "payable"
+_toAds.call{value:100}("")   不需要 payable
+    call:
+        可以调用ABI的方法，调用不存在的func 促发 fallback 、receive
+        call 两个返回值 bool/bytes
+
 注意:
+    transfer /send 函数必须添加fallback 函数
+    - send 判断 发返回值
+    - call
 
 
-
+合约:
+    
 
 
         
