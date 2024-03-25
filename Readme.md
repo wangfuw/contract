@@ -169,12 +169,35 @@ _toAds.call{value:100}("")   不需要 payable
     - send 判断 发返回值
     - call
 
-
 合约:
+    创建例子
+        声明一个合约类型 "A public a1"
+        A public a1 = A(payable(0xEc29164D68c4992cEdd1D386118A47143fdcF142));
+        构造函数:A public a2 = new A();
+    转钱：
+        有 fallback / receive
+    属性：
+        type(A).name
+        type(A).creationCode  创建内存字节
+        type(A).runtimeCode 运行内存字节
+数据位置: data location
     
+    ## storage
+        状态变量保存位子
+        存储成本高 费gas 
+    ## memory
+        数据保存在内存 ，仅在生命周期内有效
+        在函数调用期间
+        1. 函数参数保存 返回值 存在memory 中
+        2. 引用数据类型
+        3， 不能在内存创建动态数组
+        4. 函数的输入 输出，引用类型，需要使用memory {calldata}
+    ## calldata
+        保存函数参数的特殊位子，只读的位子
 
-
-        
+不同数据位置的赋值规则
+引用类型 及 修改
+    
 
 
 
